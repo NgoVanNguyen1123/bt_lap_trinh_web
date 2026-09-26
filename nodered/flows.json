@@ -1,0 +1,59 @@
+[
+    {
+        "id": "2c8df1b1d7b5edac",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5dcbac38ecb1fc1d",
+        "type": "http in",
+        "z": "2c8df1b1d7b5edac",
+        "name": "",
+        "url": "/tacke",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "3c5697b283947ca8"
+            ]
+        ]
+    },
+    {
+        "id": "3c5697b283947ca8",
+        "type": "function",
+        "z": "2c8df1b1d7b5edac",
+        "name": "function 1",
+        "func": "msg.payload = {\n    \"ok\": 1,\n    \"msg\": \"Lấy danh sách thành công\",\n    \"dssv\": [\n        { \"name\": \"Cốp\", \"money\": 123 },\n        { \"name\": \"David\", \"money\": 456 },\n        { \"name\": \"Ngô Văn Nguyên\", \"money\": 9999 }\n    ]\n};\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "a8171d2180b1c086"
+            ]
+        ]
+    },
+    {
+        "id": "a8171d2180b1c086",
+        "type": "http response",
+        "z": "2c8df1b1d7b5edac",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 550,
+        "y": 100,
+        "wires": []
+    }
+]

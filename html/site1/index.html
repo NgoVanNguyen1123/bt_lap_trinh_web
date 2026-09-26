@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo API Node-RED - TNUT</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f4f6f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; max-width: 500px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        button { background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        table { width: 100%; margin-top: 15px; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Bài tập 2: Lấy dữ liệu API từ Node-RED</h2>
+        <button onclick="fetchApiData()">Tải danh sách sinh viên</button>
+        <p id="status_msg"></p>
+        <table id="result_table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Họ và tên</th>
+                    <th>Số tiền (VND)</th>
+                </tr>
+            </thead>
+            <tbody id="student_list"></tbody>
+        </table>
+    </div>
+
+    <script>
+        async function fetchApiData() {
+            const statusMsg = document.getElementById('status_msg');
+            const table = document.getElementById('result_table');
+            const tbody = document.getElementById('student_list');
+            
+            statusMsg.innerText = "Đang tải dữ liệu...";
+            tbody.innerHTML = "";
+
+            try {
+                const response = await fetch('/api/tacke');
+                const data = await response.json();
+
+                if (data.ok === 1) {
+                    statusMsg.innerText = "Trạng thái: " + data.msg;
+                    data.dssv.forEach(student => {
+                        const row = `<tr><td>${student.name}</td><td>${student.money}</td></tr>`;
+                        tbody.innerHTML += row;
+                    });
+                    table.style.display = "table";
+                }
+            } catch (error) {
+                statusMsg.innerText = "Lỗi kết nối API!";
+            }
+        }
+    </script>
+</body>
+</html>
